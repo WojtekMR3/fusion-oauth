@@ -1,0 +1,15 @@
+# ── secrets & credentials — NEVER commit ──
+providers.yaml
+*.credentials.json
+auth.json
+.env
+*.key
+*.pem
+*_token*
+*secret*
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
