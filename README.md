@@ -34,6 +34,7 @@ Most multi-model tools assume you hold (and pay per-token for) an API key for *e
 
 ## 🚀 Features
 
+- **🔮 Full Fusion deliberation** — a 1:1 clone of OpenRouter Fusion: a **panel** of models analyzes your prompt in parallel, then a **judge** model synthesizes the answers into *consensus · contradictions · partial coverage · unique insights · blind spots* and writes the final answer.
 - **🔑 OAuth-native** — use your Claude Code (Max/Pro) and MiniMax logins directly; **no per-token API billing** for those.
 - **🧩 Mix-and-match backends** — OAuth subs **+** API keys (OpenAI, DeepSeek, OpenRouter, local servers) in the **same parallel panel**.
 - **⚡ Parallel by default** — every enabled model is queried concurrently; compare answers instantly.
@@ -100,10 +101,29 @@ providers:
 
 ## 💻 Usage
 
-```bash
-# Fuse: ask every enabled model in parallel
-python3 fusion.py "Explain the trade-offs of event-driven vs polling architectures."
+### 🔮 `fuse.py` — full Fusion deliberation (panel → judge → synthesis)
 
+The flagship: a **1:1 clone of OpenRouter Fusion's pipeline**. A panel of models analyzes your prompt in parallel, then a judge model synthesizes their answers into a structured analysis — **consensus, contradictions, partial coverage, unique insights, blind spots** — and writes the final answer from it.
+
+```bash
+python3 fuse.py "Should a small team build internal tools or buy SaaS? Recommend."
+python3 fuse.py --judge Claude-Opus "your question"   # override which model judges
+python3 fuse.py --json "your question"                # full structured output as JSON
+```
+
+Designate roles in `providers.yaml` with `panel: true` (deliberation member) and `judge: true` (the synthesizer). Reach for `fuse.py` when a single model isn't enough — research, expert critique, or anywhere the cost of being wrong outweighs a few extra completions.
+
+### ⚡ `fusion.py` — raw parallel panel (no judge)
+
+```bash
+python3 fusion.py "Explain event-driven vs polling architectures."
+```
+
+Asks every enabled model in parallel and returns their answers as JSON — compare them yourself.
+
+### 🪄 `optimize.py` — prompt optimizer
+
+```bash
 # Optimize a vague prompt (prints the improved prompt)
 python3 optimize.py "make my service use less memory"
 

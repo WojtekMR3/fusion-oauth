@@ -8,6 +8,8 @@
 #   endpoint: (api-key backend only) full /v1/messages-compatible URL
 #   api_key_env: (api-key backend only) env var holding the key
 #   enabled:  include in the panel (true/false)
+#   panel:    (fuse.py) include this model in the deliberation panel (default: all enabled)
+#   judge:    (fuse.py) use this model as the synthesizing judge (one provider)
 #
 # OAuth backends read tokens already on disk (your own subscription, your own box):
 #   claude-oauth   -> ~/.claude/.credentials.json   (Claude Code login)
@@ -19,11 +21,14 @@ providers:
     backend: claude-oauth
     model: claude-opus-4-20250514
     enabled: true
+    panel: true
+    judge: true        # Opus synthesizes the panel (fuse.py)
 
   - name: MiniMax-M3
     backend: minimax-oauth
     model: MiniMax-M3
     enabled: true
+    panel: true
 
   # Example: any OpenAI-or-Anthropic-compatible endpoint via a plain API key.
   # Reads the key from the env var named below; never stored in this file.
